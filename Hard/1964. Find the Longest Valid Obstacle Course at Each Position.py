@@ -17,18 +17,18 @@ def longestObstacleCourseAtEachPosition(obstacles: list[int]) -> list[int]:
     answer = []
     lis = []
     n = 0
-    for i in range(len(obstacles)):
+    for val in obstacles:
         if not lis:
-            lis.append(obstacles[i])
+            lis.append(val)
             indx = 0
             n += 1
         else:
-            indx = binary_search(lis, len(lis), obstacles[i])
+            indx = binary_search(lis, len(lis), val)
             if indx >= n:
-                lis.append(obstacles[i])
+                lis.append(val)
                 n += 1
             else:
-                lis[indx] = obstacles[i]
+                lis[indx] = val
 
         answer.append(indx + 1)
 
