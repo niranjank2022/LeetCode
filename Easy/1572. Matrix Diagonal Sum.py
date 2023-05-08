@@ -11,12 +11,12 @@ def diagonalSum(mat: list[list[int]]) -> int:
     return diagonal_sum
 
 
-if __name__ == '__main__':
-    testcases = [[[1, 2, 3],
-                  [4, 5, 6],
-                  [7, 8, 9]], [[1, 1, 1, 1],
-                               [1, 1, 1, 1],
-                               [1, 1, 1, 1],
-                               [1, 1, 1, 1]], [[5]]]
-    for case in testcases:
-        print(f"{case} -> {diagonalSum(case)}")
+    if __name__ == '__main__':
+        testcases = [[[1, 2, 3],
+                      [4, 5, 6],
+                      [7, 8, 9]], [[1, 1, 1, 1],
+                                   [1, 1, 1, 1],
+                                   [1, 1, 1, 1],
+                                   [1, 1, 1, 1]], [[5]]]
+        for case in testcases:
+            print(f"{case} -> {diagonalSum(case)}")
