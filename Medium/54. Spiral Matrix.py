@@ -1,61 +1,61 @@
-def recursive_function(matrix: list[list[int]], horizontal_border: list[int], vertical_border: list[int]) -> list[int]:
-    output = []
-
-    if (horizontal_border[0] == horizontal_border[1]) and (vertical_border[0] == vertical_border[1]) and (
-            horizontal_border[0] != vertical_border[0]):
-        return output
-
-    if horizontal_border[0] == horizontal_border[1]:
-        for i in range(vertical_border[0], vertical_border[1] + 1):
-            output.append(matrix[i][horizontal_border[0]])
-        return output
-
-    if vertical_border[0] == vertical_border[1]:
-        for j in range(horizontal_border[0], horizontal_border[1] + 1):
-            output.append(matrix[vertical_border[0]][j])
-        return output
-
-    i = vertical_border[0]
-    j = horizontal_border[0]
-
-    while j < horizontal_border[1]:
-        output.append(matrix[i][j])
-        j += 1
-
-    if vertical_border[0] < vertical_border[1]:
-        vertical_border[0] += 1
-        while i < vertical_border[1]:
-            output.append(matrix[i][j])
-            i += 1
-
-    if horizontal_border[0] < horizontal_border[1]:
-        horizontal_border[1] -= 1
-        while j > horizontal_border[0]:
-            output.append(matrix[i][j])
-            j -= 1
-
-    if vertical_border[0] < vertical_border[1]:
-        vertical_border[1] -= 1
-        while i > vertical_border[0]:
-            output.append(matrix[i][j])
-            i -= 1
-
-    if horizontal_border[0] < horizontal_border[1]:
-        horizontal_border[0] += 1
-
-    output.append(matrix[i][j])
-
-    return output + recursive_function(matrix, horizontal_border, vertical_border)
-
-
 def spiralOrder(matrix: list[list[int]]) -> list[int]:
     m = len(matrix)
     n = len(matrix[0])
 
-    horizontal_border = [0, n - 1]
-    vertical_border = [0, m - 1]
-    return recursive_function(matrix, horizontal_border, vertical_border)
+    return traverse_matrix(matrix, [0, m], [0, n])
 
+
+def traverse_matrix(matrix: list[list[int]], vertical_border: list[int], horizontal_border: list[int]):
+    output = []
+    m = vertical_border[1] - vertical_border[0]
+    n = horizontal_border[1] - horizontal_border[0]
+
+    if m <= 0 or n <= 0:
+        return output
+
+    if n == 1:
+        for y in range(vertical_border[0], vertical_border[1]):
+            output.append(matrix[y][horizontal_border[0]])
+        return output
+
+    if m == 1:
+        for x in range(horizontal_border[0], horizontal_border[1]):
+            output.append(matrix[vertical_border[0]][x])
+        return output
+
+    curr_x = horizontal_border[0]
+    curr_y = vertical_border[0]
+
+    # Traverse till the right end
+    for x in range(horizontal_border[0], horizontal_border[1]):
+        curr_x = x
+        output.append(matrix[curr_y][curr_x])
+    output.pop()
+
+    # Traverse till the bottom end
+    for y in range(vertical_border[0], vertical_border[1]):
+        curr_y = y
+        output.append(matrix[curr_y][curr_x])
+    output.pop()
+
+    # Traverse till the  left end
+    for x in reversed(range(horizontal_border[0], horizontal_border[1])):
+        curr_x = x
+        output.append(matrix[curr_y][curr_x])
+    output.pop()
+
+    # Traverse till the top end
+    for y in reversed(range(vertical_border[0], vertical_border[1])):
+        curr_y = y
+        output.append(matrix[curr_y][curr_x])
+    output.pop()
+
+    horizontal_border[0] += 1
+    horizontal_border[1] -= 1
+    vertical_border[0] += 1
+    vertical_border[1] -= 1
+
+    return output + traverse_matrix(matrix, vertical_border, horizontal_border)
 
 
 if __name__ == '__main__':
