@@ -1,24 +1,10 @@
 def minCostClimbingStairs(cost: list[int]) -> int:
-    cost1: int = 0
-    ptr1: int
-    cost2: int = 0
-    ptr2: int
-    for i in range(len(cost) - 2):
-        if i == 0:
-            cost.append(0)
-            ptr1 = i
-            cost1 = cost[i]
-        if i == 1:
-            ptr2 = i
-            cost2 = cost[i]
-        elif i > 1:
-            ptr1 += 1 if cost[ptr1 + 1] <= cost[ptr1 + 2] else 2
-            ptr2 += 1 if cost[ptr2 + 1] <= cost[ptr2 + 2] else 2
-            cost1 += cost[ptr1]
-            cost2 += cost[ptr2]
+    first_prev = cost[1]
+    second_prev = cost[0]
+    for val in cost[2:]:
+        first_prev, second_prev = min(first_prev, second_prev) + val, first_prev
 
-    cost.pop()
-    return cost1 if cost1 < cost2 else cost2
+    return min(first_prev, second_prev)
 
 
 def main():
