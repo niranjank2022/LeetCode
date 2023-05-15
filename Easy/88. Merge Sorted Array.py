@@ -1,23 +1,22 @@
 def merge(nums1: list[int], m: int, nums2: list[int], n: int) -> None:
-    if n > m:
-        return
-    curr = nums1.index(max(nums1))
-    prev = curr - 1
-    for num in nums2[::-1]:
-        print("***", curr, prev, num, end=' ')
-        if nums1[curr] < num:
+    i = j = 0
 
-            nums1.insert(curr + 1, num)
-            nums1.remove(0)
-            print(nums1, "***")
+    while i < m and j < n:
+        if i < m and nums1[i] <= nums2[j]:
+            while i < m and nums1[i] <= nums2[j]:
+                i += 1
+        else:
+            nums1.insert(i, nums2[j])
+            nums1.pop()
+            i += 1
+            j += 1
+            m += 1
 
-        elif nums1[curr] > num:
-            while nums1[prev] > num:
-                prev -= 1
-                curr -= 1
-            if nums1[prev] <= num:
-                nums1.insert(prev + 1, num)
-                nums1.pop()
+    while j < n:
+        nums1.insert(i, nums2[j])
+        nums1.pop()
+        i += 1
+        j += 1
 
 
 def main():
