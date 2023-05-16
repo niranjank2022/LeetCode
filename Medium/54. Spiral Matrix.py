@@ -1,65 +1,58 @@
 def spiralOrder(matrix: list[list[int]]) -> list[int]:
-    m = len(matrix)
-    n = len(matrix[0])
+    m, n = len(matrix), len(matrix[0])
+    x = y = 0
+    vertical_border, horizontal_border = [0, m], [0, n]
+    direction, next_move = 0, (1, 1, -1, -1)
+    answer = []
 
-    return traverse_matrix(matrix, [0, m], [0, n])
+    while vertical_border[0] <= x < vertical_border[1] and horizontal_border[0] <= y < horizontal_border[1]:
 
+        while direction == 0 and vertical_border[0] <= x < vertical_border[1] and horizontal_border[0] <= y < \
+                horizontal_border[1]:  # Moving right
+            answer.append(matrix[x][y])
+            if horizontal_border[0] <= y + next_move[direction] < horizontal_border[1]:
+                y += next_move[direction]
+            else:
+                direction = 1
+                x += next_move[direction]
+                vertical_border[0] += 1
 
-def traverse_matrix(matrix: list[list[int]], vertical_border: list[int], horizontal_border: list[int]):
-    output = []
-    m = vertical_border[1] - vertical_border[0]
-    n = horizontal_border[1] - horizontal_border[0]
+        while direction == 1 and vertical_border[0] <= x < vertical_border[1] and horizontal_border[0] <= y < \
+                horizontal_border[1]:  # Move downward
+            answer.append(matrix[x][y])
+            if vertical_border[0] <= x + next_move[direction] < vertical_border[1]:
+                x += next_move[direction]
+            else:
+                direction = 2
+                y += next_move[direction]
+                horizontal_border[1] -= 1
 
-    if m <= 0 or n <= 0:
-        return output
+        while direction == 2 and vertical_border[0] <= x < vertical_border[1] and horizontal_border[0] <= y < \
+                horizontal_border[1]:  # Move leftward
+            answer.append(matrix[x][y])
+            if horizontal_border[0] <= y + next_move[direction] < horizontal_border[1]:
+                y += next_move[direction]
+            else:
+                direction = 3
+                x += next_move[direction]
+                vertical_border[1] -= 1
 
-    if n == 1:
-        for y in range(vertical_border[0], vertical_border[1]):
-            output.append(matrix[y][horizontal_border[0]])
-        return output
+        while direction == 3 and vertical_border[0] <= x < vertical_border[1] and horizontal_border[0] <= y < \
+                horizontal_border[1]:  # Move upward
+            answer.append(matrix[x][y])
+            if vertical_border[0] <= x + next_move[direction] < vertical_border[1]:
+                x += next_move[direction]
+            else:
+                direction = 0
+                y += next_move[direction]
+                horizontal_border[0] += 1
 
-    if m == 1:
-        for x in range(horizontal_border[0], horizontal_border[1]):
-            output.append(matrix[vertical_border[0]][x])
-        return output
-
-    curr_x = horizontal_border[0]
-    curr_y = vertical_border[0]
-
-    # Traverse till the right end
-    for x in range(horizontal_border[0], horizontal_border[1]):
-        curr_x = x
-        output.append(matrix[curr_y][curr_x])
-    output.pop()
-
-    # Traverse till the bottom end
-    for y in range(vertical_border[0], vertical_border[1]):
-        curr_y = y
-        output.append(matrix[curr_y][curr_x])
-    output.pop()
-
-    # Traverse till the  left end
-    for x in reversed(range(horizontal_border[0], horizontal_border[1])):
-        curr_x = x
-        output.append(matrix[curr_y][curr_x])
-    output.pop()
-
-    # Traverse till the top end
-    for y in reversed(range(vertical_border[0], vertical_border[1])):
-        curr_y = y
-        output.append(matrix[curr_y][curr_x])
-    output.pop()
-
-    horizontal_border[0] += 1
-    horizontal_border[1] -= 1
-    vertical_border[0] += 1
-    vertical_border[1] -= 1
-
-    return output + traverse_matrix(matrix, vertical_border, horizontal_border)
+    return answer
 
 
 if __name__ == '__main__':
-    testcases = [[[2, 5], [8, 4], [0, -1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
+    testcases = [[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]], [[2, 5], [8, 4], [0, -1]],
+                 [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
                  [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]], [[3], [2]],
                  [[2, 3, 4], [5, 6, 7], [8, 9, 10], [11, 12, 13]], [[2, 5, 8], [4, 0, -1]]]
     for case in testcases:

@@ -1,25 +1,21 @@
 def generate(numRows: int) -> list[list[int]]:
     pascal = [[1]]
-    if numRows >= 2:
-        pascal.append([1, 1])
-    if numRows >= 3:
-        for i in range(2, numRows):
-            lst = [1]
-            for j in range(i - 1):
-                lst.append(pascal[i - 1][j] + pascal[i - 1][j + 1])
-            lst.append(1)
-            pascal.append(lst)
+
+    for i in range(numRows - 1):
+        row = []
+        for i, val in enumerate(pascal[-1]):
+            if i == 0:
+                row.append(val)
+            else:
+                row.append(pascal[-1][i - 1] + val)
+        row.append(1)
+        pascal.append(row)
 
     return pascal
 
 
-def main():
-    testcases = [5, 1, 4, 2]
+if __name__ == '__main__':
+
+    testcases = [1, 3, 5, 4]
     for case in testcases:
-        print(case)
-        [print(i) for i in generate(case)]
-        print("################")
-
-
-
-main()
+        print(f"{case} -> {generate(case)}")
