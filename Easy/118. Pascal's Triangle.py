@@ -2,12 +2,9 @@ def generate(numRows: int) -> list[list[int]]:
     pascal = [[1]]
 
     for i in range(numRows - 1):
-        row = []
-        for i, val in enumerate(pascal[-1]):
-            if i == 0:
-                row.append(val)
-            else:
-                row.append(pascal[-1][i - 1] + val)
+        row = [1]
+        for i in range(1, len(pascal[-1])):
+            row.append(pascal[-1][i - 1] + pascal[-1][i])
         row.append(1)
         pascal.append(row)
 
