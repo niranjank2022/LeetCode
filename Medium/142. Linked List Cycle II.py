@@ -5,7 +5,23 @@ class ListNode:
 
 
 def detectCycle(head: ListNode) -> ListNode:
-    slow = head.next
+    node1 = node2 = head
+    while node2 and node2.next:
+        node1 = node1.next
+        node2 = node2.next.next
+        if node1 == node2:
+            break
+
+    if node2 is None or node2.next is None:
+        return None
+
+    node1 = head
+    while node1 != node2:
+        node1 = node1.next
+        node2 = node2.next
+
+    return node1
+    """slow = head.next
     fast = head.next.next
     while slow != fast:
         slow = slow.next
@@ -16,7 +32,7 @@ def detectCycle(head: ListNode) -> ListNode:
         slow = slow.next
         fast = fast.next
 
-    return slow
+    return slow"""
 
 
 def main():
