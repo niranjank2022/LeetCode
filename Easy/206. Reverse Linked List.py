@@ -13,7 +13,7 @@ def reverseList(head: ListNode) -> ListNode:
 
     curr, next = head, head.next
 
-    while curr.next:
+    while next:
         curr.next = next.next
         next.next = head
         head = next
@@ -21,12 +21,17 @@ def reverseList(head: ListNode) -> ListNode:
         next = curr.next
 
     return head
-    """reverseNode = None
+
+
+"""
+def reverseList(head: ListNode) -> ListNode:
+    reverseNode = None
     while head is not None:
         reverseNode = ListNode(head.val, reverseNode)
         head = head.next
 
-    return reverseNode"""
+    return reverseNode
+"""
 
 
 def printList(node: ListNode):
