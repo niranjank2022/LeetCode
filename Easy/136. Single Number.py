@@ -1,9 +1,22 @@
+from typing import Set
+
+
 def singleNumber(nums: list[int]) -> int:
+    """
     hold = 0
     for i in range(len(nums)):
         hold = hold ^ nums[i]
 
     return hold
+    """
+    hashSet: set[int] = set()
+    for num in nums:
+        if num in hashSet:
+            hashSet.remove(num)
+            continue
+        hashSet.add(num)
+
+    return list(hashSet)[0]
 
 
 if __name__ == '__main__':
