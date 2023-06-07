@@ -1,22 +1,20 @@
 def evalRPN(tokens: list[str]) -> int:
-    stack = []
+    numbers = []
     for char in tokens:
         if char.isdigit() or char[1:].isdigit():
-            stack.append(int(char))
+            numbers.append(int(char))
         else:
-            num2 = stack.pop()
-            num1 = stack.pop()
-
+            n2, n1 = numbers.pop(), numbers.pop()
             if char == '+':
-                stack.append(num1 + num2)
+                numbers.append(n1 + n2)
             elif char == '-':
-                stack.append(num1 - num2)
+                numbers.append(n1 - n2)
             elif char == '*':
-                stack.append(num1 * num2)
-            elif char == '/':
-                stack.append(int(num1 / num2))
+                numbers.append(n1 * n2)
+            else:
+                numbers.append(int(n1 / n2))
 
-    return stack[0]
+    return numbers[-1]
 
 
 if __name__ == '__main__':
