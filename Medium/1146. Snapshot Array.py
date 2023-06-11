@@ -1,0 +1,32 @@
+import bisect
+
+
+class SnapshotArray:
+
+    def __init__(self, length: int):
+        self.id = 0
+        self.history_records = [[[0, 0]] for _ in range(length)]
+
+    def set(self, index: int, val: int) -> None:
+        self.history_records[index].append([self.id, val])
+
+    def snap(self) -> int:
+        self.id += 1
+        return self.id - 1
+
+    def get(self, index: int, snap_id: int) -> int:
+        snap_index = bisect.bisect_right(self.history_records[index], [snap_id, 10 ** 9])
+        return self.history_records[index][snap_index - 1][1]
+
+
+if __name__ == '__main__':
+    obj = SnapshotArray(3)
+    print(obj.array, obj.snapshots, obj.snap_count)
+
+    obj.set(0, 5)
+    print(obj.array, obj.snapshots, obj.snap_count)
+
+    print(obj.snap(), obj.array, obj.snapshots, obj.snap_count)
+
+    obj.set(0, 6)
+    print(obj.array, obj.snapshots, obj.snap_count)
