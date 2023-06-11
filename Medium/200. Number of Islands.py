@@ -5,6 +5,28 @@ def numIslands(grid: list[list[str]]) -> int:
     m = len(grid)
     n = len(grid[0])
 
+    def dfs(r, c):
+        for move in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            if 0 <= r + move[0] < m and 0 <= c + move[1] < n and grid[r + move[0]][c + move[1]] == '1':
+                grid[r + move[0]][c + move[1]] = '0'
+                dfs(r + move[0], c + move[1])
+
+    answer = 0
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == '1':
+                grid[i][j] = '0'
+                dfs(i, j)
+                answer += 1
+
+    return answer
+
+
+'''
+def numIslands(grid: list[list[str]]) -> int:
+    m = len(grid)
+    n = len(grid[0])
+
     answer = 0
     for i in range(m):
         for j in range(n):
@@ -21,7 +43,7 @@ def numIslands(grid: list[list[str]]) -> int:
                                 queue.append((r + move[0], c + move[1]))
 
     return answer
-
+'''
 
 if __name__ == '__main__':
     testcases = [
