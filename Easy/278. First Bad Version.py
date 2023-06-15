@@ -1,9 +1,9 @@
 def isBadVersion(version: int) -> bool:
-    ...
+    return True or False
 
 
 def firstBadVersion(n: int) -> int:
-    low = 0
+    low = 1
     high = n - 1
     while high >= low:
         mid = (low + high) // 2
@@ -16,4 +16,15 @@ def firstBadVersion(n: int) -> int:
             low = mid + 1
 
 
-firstBadVersion(5)
+"""
+def firstBadVersion(self, n: int) -> int:
+        low, high = 1, n
+        while low <= high:
+            mid = (low + high) // 2
+            if isBadVersion(mid) and not isBadVersion(mid - 1):
+                return mid
+            elif isBadVersion(mid):
+                high = mid - 1
+            else:
+                low = mid + 1
+"""
